@@ -41,13 +41,14 @@ var diveSync = function(dir, opt, action) {
 
         // if the file is a directory
         if (stat && stat.isDirectory()) {
+          // dive into the directory
+          if (opt.recursive)
+            diveSync(path, opt, action);
+
           // call the action if enabled for directories
           if (opt.directories)
             action(null, path);
 
-          // dive into the directory
-          if (opt.recursive)
-            diveSync(path, opt, action);
         } else {
           // apply filter
           if (!opt.filter(path, false)) return;
